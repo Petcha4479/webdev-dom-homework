@@ -65,7 +65,49 @@
 
   <script>
     "use strict";
-    // Код писать здесь
+
+    const name = document.querySelector(".add-form-name");
+    const text = document.querySelector(".add-form-text");
+    const button = document.querySelector(".add-form-button");
+
+    button.addEventListener("click", () => {
+      if (!name.value || !text.value) {
+        alert('Пожалуйста, заполните все поля');
+        return;
+      }
+
+      console.log(text.value);
+
+      const newComment = document.createElement('li');
+      newComment.className = 'comment';
+
+      const now = new Date();
+      const formattedDate = `${now.getDate().toString().padStart(2, '0')}.${(now.getMonth() + 1).toString().padStart(2, '0')}.${now.getFullYear().toString().slice(-2)} ${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+
+      newComment.innerHTML = `
+          <div class="comment-header">
+            <div>${name.value}</div>
+            <div>${formattedDate}</div>
+          </div>
+          <div class="comment-body">
+            <div class="comment-text">
+              ${text.value}
+            </div>
+          </div>
+          <div class="comment-footer">
+            <div class="likes">
+              <span class="likes-counter">0</span>
+              <button class="like-button"></button>
+            </div>
+          </div>
+        `;
+
+      name.value = '';
+      text.value = '';
+
+      document.querySelector('ul').appendChild(newComment);
+
+    })
     console.log("It works!");
   </script>
 </html>
