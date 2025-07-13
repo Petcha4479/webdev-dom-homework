@@ -35,7 +35,7 @@
   const name = document.querySelector(".add-form-name");
   const text = document.querySelector(".add-form-text");
   const button = document.querySelector(".add-form-button");
-
+  const myComent = document.querySelector(".comments");
 
   const comments = [
     {
@@ -57,7 +57,7 @@
   function renderComments(comments) {
     const commentContainer = document.querySelector(".comments");
     commentContainer.innerHTML = comments.map((comment, index) => `
-     <li class="comment" >
+     <li class="comment" data-index="${index}" >
         <div class="comment-header">
             <div>${comment.name}</div>
             <div>${comment.date.toLocaleString('ru', {
@@ -83,8 +83,9 @@
 
 
     document.querySelectorAll('.like-button').forEach(button => {
-      button.addEventListener('click', (e) => {
-        const index = e.target.dataset.index;
+      button.addEventListener('click', (event) => {
+        event.stopPropagation();
+        const index = event.target.dataset.index;
         const comment = comments[index];
 
         if (comment.isLiked) {
@@ -94,21 +95,26 @@
           comment.likes++;
           comment.isLiked = true;
         }
-
         renderComments(comments);
       });
     });
+
+    myComent.addEventListener('click', () => {
+      console.log("Пожалуйста, заполни комент");
+
+    });
+
   }
 
   renderComments(comments);
 
   button.addEventListener("click", () => {
-    if (!name.value || !text.value) {
+    if (!name.value.replaceAll("<", "&lt;").replaceAll(">", "&gt;") || !text.value.replaceAll("<", "&lt;").replaceAll(">", "&gt;")) {
       alert('Пожалуйста, заполните все поля');
       return;
     }
     const newComment = {
-      name: name.value,
+      name: name.value.replaceAll("<", "&lt;").replaceAll(">", "&gt;"),
       date: new Date(),
       text: text.value,
       likes: 0,
