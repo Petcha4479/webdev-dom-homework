@@ -8,7 +8,7 @@ export function renderComments(comments) {
             (comment, index) => `
      <li class="comment" data-index="${index}" >
         <div class="comment-header">
-            <div>${comment.name}</div>
+            <div>${comment.author.name}</div>
             <div>${comment.date.toLocaleString('ru', {
                 year: 'numeric',
                 month: 'long',

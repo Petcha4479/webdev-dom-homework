@@ -6,7 +6,7 @@ const nameInput = document.querySelector('.add-form-name')
 const textInput = document.querySelector('.add-form-text')
 const button = document.querySelector('.add-form-button')
 
-fetch('https://wedev-api.sky.pro/api/v1/gleb-fokin/comments', {
+fetch('https://wedev-api.sky.pro/api/v1/vadim-petcha/comments', {
     method: 'GET',
 })
     .then((response) => {
@@ -28,7 +28,7 @@ button.addEventListener('click', () => {
     }
 
     const newComment = {
-        name: name,
+        author: { name: name },
         date: new Date(),
         text: text,
         likes: 0,
