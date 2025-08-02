@@ -28,7 +28,7 @@ export const initComment = () => {
             if (!event.target.closest('.like-button')) {
                 const index = commentElement.dataset.index
                 const comment = comments[index]
-                textInput.value = `${comment.name}, : ${comment.text}`
+                textInput.value = `${comment.author.name}, : ${comment.text}`
                 textInput.focus()
             }
         })
