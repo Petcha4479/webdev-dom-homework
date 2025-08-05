@@ -1,12 +1,21 @@
 'use strict'
 import { renderComments } from './modules/renderComments.js'
-import { comments } from './modules/comments.js'
+import { comments, updateComments } from './modules/comments.js'
 
 const nameInput = document.querySelector('.add-form-name')
 const textInput = document.querySelector('.add-form-text')
 const button = document.querySelector('.add-form-button')
 
-renderComments(comments)
+fetch('https://wedev-api.sky.pro/api/v1/:vady/comments', {
+    method: 'GET',
+})
+    .then((response) => {
+        return response.json()
+    })
+    .then((data) => {
+        updateComments(data.comments)
+        renderComments(comments)
+    })
 
 button.addEventListener('click', () => {
     const name = nameInput.value.replaceAll('<', '&lt;').replaceAll('>', '&gt;')
@@ -16,18 +25,28 @@ button.addEventListener('click', () => {
         alert('Пожалуйста, заполните все поля')
         return
     }
-
-    const newComment = {
+    let newComment = {
         name: name,
         date: new Date(),
         text: text,
         likes: 0,
         isLiked: false,
     }
-    comments.push(newComment)
 
-    renderComments(comments)
-
+    fetch('https://wedev-api.sky.pro/api/v1/:vady/comments', {
+        method: 'POST',
+        body: JSON.stringify(newComment),
+    })
+        .then(() => {
+            return fetch('https://wedev-api.sky.pro/api/v1/:vady/comments')
+        })
+        .then((response) => {
+            return response.json()
+        })
+        .then((data) => {
+            updateComments(data.comments)
+            renderComments(comments)
+        })
     nameInput.value = ''
     textInput.value = ''
 })
