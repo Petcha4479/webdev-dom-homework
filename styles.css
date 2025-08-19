@@ -135,3 +135,10 @@ body {
   .add-form-button:hover {
     opacity: 0.9;
   }
+
+.loading {
+  text-align: center;
+  padding: 10px;
+  font-style: italic;
+  color: #666;
+}
