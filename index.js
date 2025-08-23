@@ -1,6 +1,7 @@
 'use strict'
 import { renderComments } from './modules/renderComments.js'
 import { comments, updateComments } from './modules/comments.js'
+import { fetchAndRender } from './modules/fetchAndRender.js'
 
 const nameInput = document.querySelector('.add-form-name')
 const textInput = document.querySelector('.add-form-text')
@@ -14,17 +15,17 @@ form.parentNode.insertBefore(loadingIndicator, form)
 
 document.querySelector('.comments').textContent = 'Загружаем комментарии...'
 
-fetch('https://wedev-api.sky.pro/api/v1/:vady/comments', {
-    method: 'GET',
-})
-    .then((response) => {
-        return response.json()
-    })
-    .then((data) => {
-        updateComments(data.comments)
-        renderComments(comments)
-    })
-
+fetchAndRender()
+// fetch('https://wedev-api.sky.pro/api/v1/:vady/comments', {
+//     method: 'GET',
+// })
+//     .then((response) => {
+//         return response.json()
+//     })
+//     .then((data) => {
+//         updateComments(data.comments)
+//         renderComments(comments)
+//     })
 button.addEventListener('click', () => {
     const name = nameInput.value.replaceAll('<', '&lt;').replaceAll('>', '&gt;')
     const text = textInput.value.replaceAll('<', '&lt;').replaceAll('>', '&gt;')
