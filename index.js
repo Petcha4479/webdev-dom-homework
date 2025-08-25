@@ -5,6 +5,14 @@ import { comments, updateComments } from './modules/comments.js'
 const nameInput = document.querySelector('.add-form-name')
 const textInput = document.querySelector('.add-form-text')
 const button = document.querySelector('.add-form-button')
+const form = document.querySelector('.add-form')
+const loadingIndicator = document.createElement('div')
+loadingIndicator.className = 'loading'
+loadingIndicator.textContent = 'Комментарий добавляется...'
+loadingIndicator.style.display = 'none'
+form.parentNode.insertBefore(loadingIndicator, form)
+
+document.querySelector('.comments').textContent = 'Загружаем комментарии...'
 
 fetch('https://wedev-api.sky.pro/api/v1/:vady/comments', {
     method: 'GET',
@@ -25,6 +33,10 @@ button.addEventListener('click', () => {
         alert('Пожалуйста, заполните все поля')
         return
     }
+    // Показываем индикатор загрузки и скрываем форму
+    loadingIndicator.style.display = 'block'
+    form.style.display = 'none'
+
     let newComment = {
         name: name,
         date: new Date(),
@@ -47,6 +59,8 @@ button.addEventListener('click', () => {
             updateComments(data.comments)
             renderComments(comments)
         })
+    loadingIndicator.style.display = 'none'
+    form.style.display = 'block'
     nameInput.value = ''
     textInput.value = ''
 })
