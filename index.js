@@ -8,6 +8,7 @@ const textInput = document.querySelector('.add-form-text')
 const button = document.querySelector('.add-form-button')
 const form = document.querySelector('.add-form')
 const loadingIndicator = document.createElement('div')
+
 loadingIndicator.className = 'loading'
 loadingIndicator.textContent = 'Комментарий добавляется...'
 loadingIndicator.style.display = 'none'
@@ -16,16 +17,7 @@ form.parentNode.insertBefore(loadingIndicator, form)
 document.querySelector('.comments').textContent = 'Загружаем комментарии...'
 
 fetchAndRender()
-// fetch('https://wedev-api.sky.pro/api/v1/:vady/comments', {
-//     method: 'GET',
-// })
-//     .then((response) => {
-//         return response.json()
-//     })
-//     .then((data) => {
-//         updateComments(data.comments)
-//         renderComments(comments)
-//     })
+
 button.addEventListener('click', () => {
     const name = nameInput.value.replaceAll('<', '&lt;').replaceAll('>', '&gt;')
     const text = textInput.value.replaceAll('<', '&lt;').replaceAll('>', '&gt;')
